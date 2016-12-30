@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM openjdk:6-jdk
 RUN apt-get update
 RUN apt-get install -y build-essential ntp
 ADD leap-a-day.c /
