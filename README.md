@@ -1,10 +1,8 @@
 # leap-java-demo
 
-This Docker image that demonstrates the behavior of the JDK's time functions
-during a leap second.
+This Docker image that demonstrates the behavior of the JDK's time functions during a leap second.
 
-It is pretty basic, but can be tweaked for experimenting and understanding
-the behavior of your application during a leap second.
+It is pretty basic, but can be tweaked for experimenting and understanding the behavior of your application during a leap second.
 
 ## How to use this image
 
@@ -14,28 +12,20 @@ To run the demonstration, simply execute:
 docker run --privileged tolbertam/leap-java-demo
 ```
 
-Note that `--privileged` is required to be able to update the clock using the
-`adjtimex` call, which is employed by the [leap-a-day.c][leap-a-day] script.
+Note that `--privileged` is required to be able to update the clock using the `adjtimex` call, which is employed by the [leap-a-day.c][leap-a-day] script.
 
 ## What this does
 
-This image is meant to show that java relies on the OS system clock to get the
-current time.  During a leap second, the OS will set it's system clock back 1
-second.
+This image is meant to show that java relies on the OS system clock to get the current time.  During a leap second, the OS will set it's system clock back 1 second.
 
-John Stultz's [leap-a-day.c][leap-a-day] test is executed in the background to
-set the time to 10 seconds before midnight on the current day and injects a
-leap second at midnight.
+John Stultz's [leap-a-day.c][leap-a-day] test is executed in the background to set the time to 10 seconds before midnight on the current day and injects a leap second at midnight.
 
-A [local version](/leap-a-day.c#L188-L190) of this test is provided with the
-only change being that it is set up to flush to stdout/stderr immediately.
+A [local version](/leap-a-day.c#L188-L190) of this test is provided with the only change being that it is set up to flush to stdout/stderr immediately.
 
-[LeapTest.java](/LeapTest.java) is then executed, which records the result
-of Instant.now() every 200ms.  If Instant.now() is ever less than the previous
-invocation the program logs this occurrence.  The program exits after 15
-seconds with a return code of 0:
+[LeapTest.java](/LeapTest.java) is then executed, which records the result of Instant.now() every 200ms.  If Instant.now() is ever less than the previous invocation the program logs this occurrence.  The program exits after 15 seconds with a return code of 0:
 
-```
+```sh
+
 Setting clock and injecting leap second 10 seconds from now.
 Setting time to speed up testing
 Running for 1 iterations. Press ctrl-c to stop
@@ -73,7 +63,8 @@ Instant.now(): 2017-01-01T00:00:04.023Z
 
 If Instant.now() is ever increasing, the program runs for 15 seconds and then exits with a return code of 1:
 
-```
+```sh
+
 ...
 Instant.now(): 2017-01-02T00:00:03.427Z
 Instant.now(): 2017-01-02T00:00:03.630Z
