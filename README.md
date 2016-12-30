@@ -60,13 +60,13 @@ Instant.now(): 2017-01-01T00:00:04.023Z
 (PASS) Leap second was encountered!
 ```
 
-Note that the behavior is such that the system clock change is observed, however this hasn't always been the case with the JDK, for example if you try this same experiment with an older JDK:
+Note that the behavior is such that the system clock change is observed by the JDK, however older versions of the JDK may demonstrate different behaviors, for example if you try this same experiment with JDK 6:
 
 ```
 docker run --rm --privileged tolbertam/leap-java-demo:6-jdk
 ```
 
-You should observe that during the leap second the elapsed duration (derived from System.nanoTime()) between time checks takes 1200ms instead of 200ms.  This is because of the previous JDK behavior used CLOCK\_REALTIME for scheduling.  This is no longer the case as of JDK 7u60.
+You should observe that during the leap second the elapsed duration (derived from System.nanoTime()) between time checks takes 1200ms instead of 200ms.  This is because of scheduling and timing operations (such as `Thread.sleep`) previously used CLOCK\_REALTIME instead of CLOCK\_MONOTONIC.  This is no longer the case as of JDK 7u60.
 
 ```sh
 (+205 ms) System.currentTimeMillis(): 1483315199458, new Date(): 2017-01-01 23:59:59,458
