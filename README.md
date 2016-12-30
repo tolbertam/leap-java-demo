@@ -9,7 +9,7 @@ It is pretty basic, but can be tweaked for experimenting and understanding the b
 To run the demonstration, simply execute:
 
 ```
-docker run --privileged tolbertam/leap-java-demo
+docker run --rm --privileged tolbertam/leap-java-demo
 ```
 
 Note that `--privileged` is required to be able to update the clock using the `adjtimex` call, which is employed by the [leap-a-day.c][leap-a-day] script.
@@ -25,7 +25,6 @@ A [local version](/leap-a-day.c#L188-L190) of this test is provided with the onl
 [LeapTest.java](/LeapTest.java) is then executed, which records the result of Instant.now() every 200ms.  If Instant.now() is ever less than the previous invocation the program logs this occurrence.  The program exits after 15 seconds with a return code of 0:
 
 ```sh
-
 Setting clock and injecting leap second 10 seconds from now.
 Setting time to speed up testing
 Running for 1 iterations. Press ctrl-c to stop
@@ -64,7 +63,6 @@ Instant.now(): 2017-01-01T00:00:04.023Z
 If Instant.now() is ever increasing, the program runs for 15 seconds and then exits with a return code of 1:
 
 ```sh
-
 ...
 Instant.now(): 2017-01-02T00:00:03.427Z
 Instant.now(): 2017-01-02T00:00:03.630Z
