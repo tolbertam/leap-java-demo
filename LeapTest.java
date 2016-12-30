@@ -8,14 +8,18 @@ public class LeapTest {
         long start = System.nanoTime();
         long s15InNanos = TimeUnit.NANOSECONDS.convert(15, TimeUnit.SECONDS);
         boolean leapEncountered = false;
+        long beforeS = System.nanoTime();
         do {
+            long afterS = System.nanoTime();
             Instant i = Instant.now();
-            System.out.printf("Instant.now(): %s%n", i);
+			long elapsedSinceLast = TimeUnit.MILLISECONDS.convert(afterS - beforeS, TimeUnit.NANOSECONDS);
+            System.out.printf("(+%-4dms) Instant.now(): %s%n", elapsedSinceLast, i);
             if (i.isBefore(last)) {
                 System.out.printf("now() (%s) is less than last (%s), leap second must have been encountered.%n", i, last);
                 leapEncountered = true;
             }
             last = i;
+            beforeS = System.nanoTime();
             Thread.sleep(200);
         } while (System.nanoTime() - start < s15InNanos);
 
