@@ -60,15 +60,25 @@ Instant.now(): 2017-01-01T00:00:04.023Z
 (PASS) Leap second was encountered!
 ```
 
-If Instant.now() is ever increasing, the program runs for 15 seconds and then exits with a return code of 1:
+Note that the behavior is such that the system clock change is observed, however this hasn't always been the case with the JDK, for example if you try this same experiment with an older JDK:
+
+```
+docker run --rm --privileged tolbertam/leap-java-demo:6-jdk
+```
+
+You should observe that during the leap second the elapsed duration (derived from System.nanoTime()) between time checks takes 1200ms instead of 200ms.  This is because of the previous JDK behavior used CLOCK\_REALTIME for scheduling.  This is no longer the case as of JDK 7u60.
 
 ```sh
-...
-Instant.now(): 2017-01-02T00:00:03.427Z
-Instant.now(): 2017-01-02T00:00:03.630Z
-Instant.now(): 2017-01-02T00:00:03.835Z
-Instant.now(): 2017-01-02T00:00:04.037Z
-(FAIL) Time was not sent back, must not have encountered a leap second?
+(+205 ms) System.currentTimeMillis(): 1483315199458, new Date(): 2017-01-01 23:59:59,458
+Sun Jan  1 23:59:59 2017 + 512804 us (35)    TIME_INS
+(+204 ms) System.currentTimeMillis(): 1483315199663, new Date(): 2017-01-01 23:59:59,663
+(+203 ms) System.currentTimeMillis(): 1483315199867, new Date(): 2017-01-01 23:59:59,867
+Sun Jan  1 23:59:59 2017 +  13815 us (36)    TIME_OOP
+Sun Jan  1 23:59:59 2017 + 517398 us (36)    TIME_OOP
+Mon Jan  2 00:00:00 2017 +   1661 us (36)    TIME_WAIT
+(+1200ms) System.currentTimeMillis(): 1483315200068, new Date(): 2017-01-02 00:00:00,068
 ```
+
+For more information on that, see: http://mail.openjdk.java.net/pipermail/hotspot-runtime-dev/2015-April/014775.html
 
 [leap-a-day]: https://github.com/johnstultz-work/timetests/blob/master/leap-a-day.c
