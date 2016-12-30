@@ -1,7 +1,7 @@
 # leap-java-demo
 
-This Docker image demonstrates the behavior of the JDK during an injected leap
-second.
+This Docker image that demonstrates the behavior of the JDK's time functions
+during a leap second.
 
 It is pretty basic, but can be tweaked for experimenting and understanding
 the behavior of your application during a leap second.
@@ -27,8 +27,8 @@ John Stultz's [leap-a-day.c][leap-a-day] test is executed in the background to
 set the time to 10 seconds before midnight on the current day and injects a
 leap second at midnight.
 
-A local version of this script is provided with the only change being 
-that it is set up to flush to stdout/stderr immediately.
+A [local version](/leap-a-day.c#L188-L190) of this test is provided with the
+only change being that it is set up to flush to stdout/stderr immediately.
 
 [LeapTest.java](/LeapTest.java) is then executed, which records the result
 of Instant.now() every 200ms.  If Instant.now() is ever less than the previous
