@@ -14,6 +14,8 @@ docker run --rm --privileged tolbertam/leap-java-demo
 
 Note that `--privileged` is required to be able to update the clock using the `adjtimex` call, which is employed by the [leap-a-day.c][leap-a-day] script.
 
+Also note that if you are running Docker in an environment where the kernel is shared with your host system (i.e. Linux) this will change the clock in your host environment, beware!
+
 ## What this does
 
 This image is meant to show that java relies on the OS system clock to get the current time.  During a leap second, the OS will set it's system clock back 1 second.
